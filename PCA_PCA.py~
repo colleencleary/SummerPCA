@@ -1,0 +1,8 @@
+import pandas as pd
+from sklearn.decomposition import PCA
+
+def PCA(data_scaled):
+    '''This function performs a principal component analysis on the given array'''
+    pca=PCA(n_components=5)
+    data_pca=pca.fit_transform(data_scaled)
+    return pd.DataFrame(data_pca)
