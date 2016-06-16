@@ -1,5 +1,6 @@
 '''This code loads the Fillipazo and Photometry tables and plots data after running a principle component analysis'''
 
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from PCA_adjustColumns import adjustFili, adjustPhoto
@@ -10,9 +11,9 @@ from PCA_remName import remName
 from PCA_impute import impute
 from PCA_scale import scale
 from PCA import perform
-#from PCA_loadings import loadings
 from PCA_plot import plot_PCA
 from PCA_vectors import vectors
+from PCA_color import colorColumns
 
 #load Fili Table
 fili = pd.read_csv('Fili15 Table9.csv', delimiter=',')
@@ -39,10 +40,13 @@ for elem in newcolumns:
     fiPh[elem]=fiPh[elem]-dm
 
 #remove shortname and age columns
-newarray=remName(fiPh)
+newfiPh=remName(fiPh)
+
+#create color columns
+newfiPh=colorColumns(newfiPh)
 
 #impute data
-data_imputed=impute(newarray)
+data_imputed=impute(newfiPh)
 
 #scale data
 data_scaled=scale(data_imputed)
@@ -55,7 +59,7 @@ data_PCA=pca.transform(data_scaled)
 data_PCA=pd.DataFrame(data_PCA)
 
 #graph PCA (x, y, z)
-plot_PCA(data_PCA[0], data_PCA[1], fiPh.Gravity, data_scaled, 10, pca)
+#plot_PCA(data_PCA[0], data_PCA[1], fiPh.Gravity, data_scaled, 10, pca)
 
 #save graph as png image
 #plt.savefig('biplot3.png')

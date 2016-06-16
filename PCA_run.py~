@@ -13,6 +13,7 @@ from PCA import perform
 #from PCA_loadings import loadings
 from PCA_plot import plot_PCA
 from PCA_vectors import vectors
+from PCA_color import colorColumns
 
 #load Fili Table
 fili = pd.read_csv('Fili15 Table9.csv', delimiter=',')
@@ -55,7 +56,11 @@ data_PCA=pca.transform(data_scaled)
 data_PCA=pd.DataFrame(data_PCA)
 
 #graph PCA (x, y, z)
-plot_PCA(data_PCA[0], fiPh.Temperature, fiPh.Gravity, data_scaled, 10, pca)
+#plot_PCA(data_PCA[0], data_PCA[1], fiPh.Gravity, data_scaled, 10, pca)
 
 #save graph as png image
 #plt.savefig('biplot3.png')
+
+color_JH=colorColumns(fiPh.J, fiPh.H)
+
+print color_JH

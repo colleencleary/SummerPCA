@@ -5,7 +5,7 @@ from sklearn.decomposition import PCA
 def plot_PCA(data_PCA, y_value, z_value, data_scaled, factor, pca):
     plt.scatter(data_PCA, y_value, c=z_value)
     #plt.ylim([-4,4])
-    #plt.xlim([-4,4])
+    plt.xlim([-2,-8])
     plt.title('PCA of Star Data')
     plt.colorbar().set_label('Gravity')
     plt.xlabel('PCA[0]')
