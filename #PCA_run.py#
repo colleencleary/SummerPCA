@@ -59,6 +59,5 @@ pca=perform(data_scaled, 5)
 data_PCA=pca.transform(data_scaled)
 data_PCA=pd.DataFrame(data_PCA)
 
-#graph and save (x, y, z, data_scaled, factor, pca, save(Y/N))
-plot_PCA(newfiPh['H-W2'], data_PCA[0], fiPh.Temperature, data_scaled, 10, pca, 'N')
-plt.savefig('/Users/Owner/Summer_Research/graphs/HW2_PCA0_Gravity.png')
+#graph and save (x, y, z)
+plot_PCA(newfiPh['J-K'], newfiPh['J-H'], fiPh.Temperature, data_scaled, 10, pca)

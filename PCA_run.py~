@@ -1,5 +1,6 @@
 '''This code loads the Fillipazo and Photometry tables and plots data after running a principle component analysis'''
 
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from PCA_adjustColumns import adjustFili, adjustPhoto
@@ -10,7 +11,6 @@ from PCA_remName import remName
 from PCA_impute import impute
 from PCA_scale import scale
 from PCA import perform
-#from PCA_loadings import loadings
 from PCA_plot import plot_PCA
 from PCA_vectors import vectors
 from PCA_color import colorColumns
@@ -40,10 +40,14 @@ for elem in newcolumns:
     fiPh[elem]=fiPh[elem]-dm
 
 #remove shortname and age columns
-newarray=remName(fiPh)
+newfiPh=remName(fiPh)
+
+#create color columns
+BDdict = {'J' : 1.24, 'H' : 1.66, 'K' : 2.19, 'Ks' : 2.16, 'W1' : 3.35, 'W2' : 4.6, 'W3' : 11.56, 'W4' : 22.09, '[3.6]' : 3.51, '[4.5]' : 4.44, '[5.8]' : 5.63, '[8]' : 7.59, 'g' : .48, 'i' : .76, 'r' : .62, 'u' : .35, 'z' : .91 }
+newfiPh=colorColumns(newfiPh, BDdict)
 
 #impute data
-data_imputed=impute(newarray)
+data_imputed=impute(newfiPh)
 
 #scale data
 data_scaled=scale(data_imputed)
@@ -55,12 +59,6 @@ pca=perform(data_scaled, 5)
 data_PCA=pca.transform(data_scaled)
 data_PCA=pd.DataFrame(data_PCA)
 
-#graph PCA (x, y, z)
-#plot_PCA(data_PCA[0], data_PCA[1], fiPh.Gravity, data_scaled, 10, pca)
-
-#save graph as png image
-#plt.savefig('biplot3.png')
-
-color_JH=colorColumns(fiPh.J, fiPh.H)
-
-print color_JH
+#graph and save (x, y, z, data_scaled, factor, pca, save(Y/N))
+plot_PCA(newfiPh['H-W2'], data_PCA[0], fiPh.Gravity, data_scaled, 10, pca, 'N')
+plt.savefig('/Users/Owner/Summer_Research/graphs/HW2_PCA0_Gravity.png')
