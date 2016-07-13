@@ -1,7 +1,7 @@
 '''This code optimizes the columns:
 1) Columns are renamed
 2) Reference/Uncertainty columns are removed 
-3)Columns with up to 70% null values are removed.'''
+3)Columns with up to 50% null values are removed.'''
 
 import numpy as np
 
@@ -37,7 +37,7 @@ def adjustFili(fili):
 def adjustPhoto(photo):
     '''This returns the photo file without columns that are mostly null values'''
     nullValues=photo.isnull().sum()
-    keepcol=np.where(nullValues<len(photo)*0.7)[0]
+    keepcol=np.where(nullValues<len(photo)*0.5)[0]
     newphoto=photo[keepcol].copy()
     
     return newphoto
